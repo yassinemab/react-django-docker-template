@@ -1,0 +1,54 @@
+version: '3.9'
+services:
+  database:
+    container_name: default-database
+    image: mysql
+    cap_add:
+      - SYS_NICE
+    restart: always
+    environment:
+      - MYSQL_DATABASE=DEFAULT_DB
+      - MYSQL_ROOT_PASSWORD=DEFAULT_PASSWORD
+    ports:
+      - '3306:3306'
+    volumes:
+      - db:/var/lib/mysql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  backend:
+    container_name: default-backend
+    build:
+      context: ./backend
+    depends_on:
+      - database
+    ports:
+      - 8000:8000
+    env_file:
+      - ./backend/.env
+    volumes:
+      - backend:/usr/src/app
+
+  frontend:
+    container_name: default-frontend
+    build:
+      context: ./frontend
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./frontend/.env
+    stdin_open: true
+    environment:
+          - NODE_ENV=development
+    volumes:
+      - ./frontend:/app
+
+  # redis:
+  #   container_name: default-redis
+  #   build:
+  #     context: ./redis
+
+volumes:
+  db:
+    driver: local
+  backend:
+    driver: local

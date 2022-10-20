@@ -1,0 +1,12 @@
+setuptools
+Django
+numpy
+mysqlclient
+unicorn
+psycopg2-binary
+djangorestframework
+pymysql
+PyJWT
+bcrypt
+datetime
+django-cors-headers

@@ -1,4 +1,11 @@
 # react-django-docker-template
-Basic web development project for a react (typescript), django and docker tech stack. Contains containers for frontend/backend/database (mysql), basic auth system (frontend and backend), a container for dispatching jobs and a integrations for fontawesome icons, integrations for css frameworks sass and basic testing using jest. Also a config file for a formatter 
-
-A premade redis queue for long task jobs that need to be queued. This will be ran in the docker container.
+Basic web development project for a React (typescript), Django and docker tech stack.Contains the following:
+- containers for frontend, backend, database(mysql) and redis.
+- Backend for basic authentication.
+- Frontend for basic authentication.
+- integrations for css frameworks sass and bootstrap.
+- React config file for formatting.
+- integrations for fontawesome icons. 
+- Basic frontend testing using jest.
+- Basic backend testing using django tests
+- Django commands for changing app names and project name

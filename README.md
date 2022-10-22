@@ -3,10 +3,9 @@ Basic web development project for a React (typescript), Django and Docker tech s
 - containers for frontend, backend, database(mysql) and redis. ✅
 - Backend for basic authentication. ✅
 - Frontend for basic authentication. ✅
-- integrations for css frameworks sass and bootstrap. 
+- integrations for css frameworks sass and bootstrap. ✅
 - React config file for formatting. ✅
 - Redux provider for keeping track of global state. ✅
-- integrations for fontawesome icons. 
-- Basic frontend testing using jest.
-- Basic backend testing using django tests
+- Basic frontend testing using jest. 
+- Basic backend testing using django tests.
 - Django commands for changing app names and project name ✅

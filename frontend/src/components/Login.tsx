@@ -21,19 +21,6 @@ export default function Login() {
             .then((res: any) => {
                 console.log("successfully logged in")
 
-                // Store.addNotification({
-                //     title: "Success",
-                //     message: res.data.message,
-                //     type: "success",
-                //     insert: "top",
-                //     container: "top-right",
-                //     animationIn: ["animate__animated", "animate__fadeIn"],
-                //     animationOut: ["animate__animated", "animate__fadeOut"],
-                //     dismiss: {
-                //         duration: 3000,
-                //         onScreen: true
-                //     }
-                // });
                 // Set the user in the redux store
                 const data = res.data.data
                 dispatch(
@@ -44,15 +31,16 @@ export default function Login() {
                         id: data.id,
                     })
                 )
+
                 // Set the cookie
                 document.cookie = `jwt=${res.data.data.token};`
                 // Redirect to homepage
                 navigate("/")
             })
             .catch((res: any) => {
+              // Show error
                 console.log("errorsss")
                 console.log(res.data)
-                // Show error
             })
     }
 

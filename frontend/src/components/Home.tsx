@@ -6,10 +6,6 @@ import { selectUser } from "../reducers/userReducer"
 const Home: FC = (props): JSX.Element => {
     const user = useSelector(selectUser)
 
-    useEffect(() => {
-        console.log("New user", user)
-    }, [user])
-
     return (
         <div className="centered-container" style={{ flexWrap: "wrap" }}>
             <h1 className="d-flex justify-content-center col-md-12">

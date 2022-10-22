@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
-import "./style.css"
+import "./style.scss"
 import HttpService from "./services/http.service"
 import { useDispatch } from "react-redux"
 import { setUser } from "./reducers/userReducer"
@@ -18,7 +18,6 @@ function App() {
         service
             .get("auth/user/")
             .then((res: any) => {
-                console.log("user is logged in")
                 dispatch(
                     setUser({
                         active: res.data.data.active,

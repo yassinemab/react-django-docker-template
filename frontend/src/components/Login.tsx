@@ -1,29 +1,26 @@
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import * as types from "../types"
-import axios from "axios"
+import HttpService from "../services/http.service"
+import { setUser } from "../reducers/userReducer"
+import { useDispatch } from "react-redux"
 
 export default function Login() {
+    const service = new HttpService()
+    const dispatch = useDispatch()
     const navigate = useNavigate()
     const [formData, setFormData] = useState<types.Dictionary<string>>({
         email: "",
         password: "",
     })
 
-    const login = (): void => {
-        if (formData.password != formData.confirmPassword) {
-            // Show error
-            console.log("passwords don't match")
-            return
-        }
-
-        axios
-            .post(
-                `${process.env.REACT_APP_BACKEND_URL}/auth/register/`,
-                formData
-            )
+    const login = (e: any): void => {
+        e.preventDefault()
+        service
+            .post("auth/login/", formData)
             .then((res: any) => {
-                console.log("successfully registered")
+                console.log("successfully logged in")
+
                 // Store.addNotification({
                 //     title: "Success",
                 //     message: res.data.message,
@@ -37,9 +34,20 @@ export default function Login() {
                 //         onScreen: true
                 //     }
                 // });
+                // Set the user in the redux store
+                const data = res.data.data
+                dispatch(
+                    setUser({
+                        active: data.active,
+                        name: data.name,
+                        email: data.email,
+                        id: data.id,
+                    })
+                )
+                // Set the cookie
+                document.cookie = `jwt=${res.data.data.token};`
                 // Redirect to homepage
                 navigate("/")
-                console.log(res.data)
             })
             .catch((res: any) => {
                 console.log("errorsss")
@@ -53,8 +61,8 @@ export default function Login() {
             <div className="col-xl-4 col-md-8 col-sm-11 col-xs-11">
                 <h1 className="text-center">Login</h1>
                 <form
-                    onSubmit={() => {
-                        login()
+                    onSubmit={(e) => {
+                        login(e)
                     }}
                 >
                     <div className="form-group">

@@ -1,37 +1,53 @@
-import { useEffect } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import axios from "axios";
-import "./style.css";
+import React, { useEffect } from "react"
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
+import "./style.css"
+import HttpService from "./services/http.service"
+import { useDispatch } from "react-redux"
+import { setUser } from "./reducers/userReducer"
 
-import Home from "./components/Home";
-import NotFound from "./components/NotFound";
-import Login from "./components/Login";
-import Register from "./components/Register";
+import Home from "./components/Home"
+import NotFound from "./components/NotFound"
+import Login from "./components/Login"
+import Register from "./components/Register"
+import Logout from "./components/Logout"
 
 function App() {
-  useEffect(() => {
-    axios
-      .post(`${process.env.REACT_APP_BACKEND_URL}/auth/user/`)
-      .then((res) => {
-        if (res.status === 200) {
-          // Create a context for the user, so every component can access the
-          // user if wanted.
-        }
-      });
-  }, []);
+    const service: HttpService = new HttpService()
+    const dispatch = useDispatch()
+    useEffect(() => {
+        service
+            .get("auth/user/")
+            .then((res: any) => {
+                console.log("user is logged in")
+                dispatch(
+                    setUser({
+                        active: res.data.data.active,
+                        name: res.data.data.name,
+                        email: res.data.data.email,
+                        id: res.data.data.id,
+                    })
+                )
 
-  return (
-    <>
-      <Router>
-        <Routes>
-          <Route path="" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Router>
-    </>
-  );
+                // Create a context for the user, so every component can access the
+                // user if wanted.
+            })
+            .catch((res: any) => {
+                console.log("user is not logged in")
+                // Show error
+            })
+    })
+
+    return (
+        <Router>
+            <Routes>
+                <Route path="" element={<Home />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/logout" element={<Logout />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="*" element={<NotFound />} />
+            </Routes>
+        </Router>
+    )
 }
 
-export default App;
+export default App

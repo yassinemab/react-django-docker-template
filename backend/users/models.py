@@ -6,6 +6,7 @@ class Users(BaseModel):
     name = models.CharField(max_length=255)
     email = models.EmailField(unique=True)
     password = models.CharField(max_length=255)
+    active = models.BooleanField(default=True)
 
     class Meta:
         db_table = "Users"
@@ -22,6 +23,7 @@ class Users(BaseModel):
             "id": self.id,
             "name": self.name,
             "email": self.email,
+            "active": self.active,
             "created_at": self.created_at,
             "updated_at": self.updated_at,
         }

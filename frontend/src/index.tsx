@@ -3,14 +3,17 @@ import ReactDOM from "react-dom/client"
 import App from "./App"
 import reportWebVitals from "./reportWebVitals"
 import "react-notifications-component/dist/theme.css"
+import { Provider } from "react-redux"
+import store from "./store"
+
 // import {ReactNotifications} from 'react-notifications-component'
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement)
 root.render(
-    <>
+    <Provider store={store}>
         {/* <ReactNotifications /> */}
         <App />
-    </>
+    </Provider>
 )
 
 // If you want to start measuring performance in your app, pass a function

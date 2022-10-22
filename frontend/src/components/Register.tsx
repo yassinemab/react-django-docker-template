@@ -1,10 +1,11 @@
-import axios from "axios"
 import React, { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import * as types from "../types"
+import HttpService from "../services/http.service"
 // import { Store } from 'react-notifications-component';
 
 export default function Register(): JSX.Element {
+    const service = new HttpService()
     const navigate = useNavigate()
     const [formData, setFormData] = useState<types.Dictionary<string>>({
         email: "",
@@ -14,17 +15,13 @@ export default function Register(): JSX.Element {
     })
 
     const register = (): void => {
-        if (formData.password != formData.confirmPassword) {
+        if (formData.password !== formData.confirmPassword) {
             // Show error
             console.log("passwords don't match")
             return
         }
 
-        axios
-            .post(
-                `${process.env.REACT_APP_BACKEND_URL}/auth/register/`,
-                formData
-            )
+        service.post("auth/register/", formData)
             .then((res: any) => {
                 console.log("successfully registered")
                 // Store.addNotification({
@@ -40,14 +37,15 @@ export default function Register(): JSX.Element {
                 //         onScreen: true
                 //     }
                 // });
-                navigate("/login")
+
                 // Redirect to login
+                navigate("/login")
                 console.log(res.data)
             })
             .catch((res: any) => {
+                // Show error
                 console.log("errorsss")
                 console.log(res.data)
-                // Show error
             })
     }
 

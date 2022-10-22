@@ -26,6 +26,11 @@ class AuthViewSet(viewsets.ViewSet):
             raise PermissionDenied(
                 {"error": "Authentication failed", "message": "Email does not exist."})
 
+        # If user is not active, throw error
+        if not user.active:
+            raise PermissionDenied(
+                {"error": "Authentication failed", "message": "User is not active."})
+
         # Passwords need to be encoded before hashing
         password = request.data["password"].encode("utf-8")
         user_password = user.password.encode("utf-8")
@@ -49,7 +54,8 @@ class AuthViewSet(viewsets.ViewSet):
         response.data = {
             "message": "Logged in successfully",
             "data": {
-                "token": token
+                "token": token,
+                **user.serialize()
             }
         }
         response.status_code = status.HTTP_200_OK
@@ -103,7 +109,7 @@ class AuthViewSet(viewsets.ViewSet):
         password = password.encode("utf-8")
         hashed_password = bcrypt.hashpw(password, bcrypt.gensalt())
         user = Users.objects.create(
-            email=email, name=name, password=str(hashed_password)[2:-1])
+            email=email, name=name, password=str(hashed_password)[2:-1], active=True)
         user.save()
 
         return Response({"message": "Created account successfully"})
@@ -117,6 +123,7 @@ class UsersViewSet(viewsets.ViewSet):
 
         # Get the jwt token from the users cookies
         token = request.COOKIES.get('jwt')
+
         if not token:
             raise AuthenticationFailed(
                 {"error": "Authentication failed", "message": "Token not found."})

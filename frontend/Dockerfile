@@ -17,11 +17,15 @@ RUN npm cache verify && npm install
 
 # Install neccessary packages
 RUN npm install --save @babel/core @babel/preset-env @babel/preset-react react-scripts babel-loader \
-    react react-router-dom react-dom webpack webpack-cli
+    typescript @types/react @types/react-router-dom @types/react-dom webpack webpack-cli
 
 # Install fontawesome packages
 RUN npm install --save @fortawesome/fontawesome-svg-core @fortawesome/free-solid-svg-icons \
-    @fortawesome/react-fontawesome react-bootstrap bootstrap js-cookie react-notifications-component
+    @fortawesome/react-fontawesome
+
+# Install extra packages
+RUN npm install --save react-bootstrap bootstrap js-cookie react-notifications-component \
+    axios@0.24.0 sass
 
 # Copy app
 COPY . ./

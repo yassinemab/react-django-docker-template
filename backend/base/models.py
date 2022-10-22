@@ -9,6 +9,9 @@ class BaseModel(models.Model):
     def save(self, *args, **kwargs):
         ''' On save, update timestamps '''
         if not self.id:
-            self.created = timezone.now()
-        self.modified = timezone.now()
+            self.created_at = timezone.now()
+        self.updated_at = timezone.now()
         return super(BaseModel, self).save(*args, **kwargs)
+
+    class Meta:
+        abstract = True  # Set this model as Abstract

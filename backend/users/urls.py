@@ -1,16 +1,9 @@
-from .views import AuthViewSet
+from .views import AuthViewSet, UsersViewSet
 from django.urls import path
 
 urlpatterns = [
-    path('login/', AuthViewSet.as_view({'post': 'login'}))
+    path('login/', AuthViewSet.as_view({'post': 'login'})),
+    path('register/', AuthViewSet.as_view({'post': 'register'})),
+    path('logout/', AuthViewSet.as_view({'post': 'logout'})),
+    path('user/', UsersViewSet.as_view({'get': 'get'})),
 ]
-
-# institutions_crud = InstitutionsViewSet.as_view(
-#     {'get': 'getAll', 'post': 'add'})
-# institutions_detail = InstitutionsViewSet.as_view(
-#     {'get': 'getById', 'put': 'update', 'delete': 'delete'})
-
-# institutionurls = [
-#     path('', institutions_crud, name="institutions"),
-#     re_path(r'(?P<id>\d+)/$', institutions_detail, name="institutions/id")
-# ]

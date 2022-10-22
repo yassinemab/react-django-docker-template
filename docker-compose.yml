@@ -1,5 +1,12 @@
 version: '3.9'
 services:
+  redis:
+    container_name: default-redis
+    image: redis:5
+    restart: always
+    ports:
+      - "6379:6379"
+
   database:
     container_name: default-database
     image: mysql
@@ -21,12 +28,13 @@ services:
       context: ./backend
     depends_on:
       - database
+      - redis
     ports:
       - 8000:8000
     env_file:
       - ./backend/.env
     volumes:
-      - backend:/usr/src/app
+      - ./backend:/usr/src/app
 
   frontend:
     container_name: default-frontend
@@ -39,16 +47,11 @@ services:
     stdin_open: true
     environment:
           - NODE_ENV=development
+          - BACKEND_URL=http://localhost:8000
+          - FRONTEND_URL=http://localhost:3000
     volumes:
       - ./frontend:/app
 
-  # redis:
-  #   container_name: default-redis
-  #   build:
-  #     context: ./redis
-
 volumes:
   db:
-    driver: local
-  backend:
     driver: local

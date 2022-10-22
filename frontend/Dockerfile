@@ -24,8 +24,8 @@ RUN npm install --save @fortawesome/fontawesome-svg-core @fortawesome/free-solid
     @fortawesome/react-fontawesome
 
 # Install extra packages
-RUN npm install --save react-bootstrap bootstrap js-cookie react-notifications-component \
-    axios@0.24.0 sass
+RUN npm install --save react-bootstrap bootstrap js-cookie @types/react-notifications-component \
+    react-notifications-component axios@0.24.0 sass
 
 # Copy app
 COPY . ./

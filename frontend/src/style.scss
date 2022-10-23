@@ -1,40 +1,68 @@
+$text-color: rgb(70, 70, 70);
+$inverted-text-color: rgb(221, 221, 221);
+$inverted-text-color-hover: rgb(185, 185, 185);
+$standard-box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+$primary-button-color: rgb(38, 153, 230);
+$primary-button-color-hover: rgb(34, 130, 194);
 
+@font-face {
+    font-family: NotoSans;
+    src: url("./assets/fonts/NotoSans-Medium.ttf");
+}
+
+body {
+    font-family: NotoSans;
+}
 
 .centered-container {
-  display: flex;
-  justify-content: center;
-  width: 100vw;
-  align-items: center;
-  margin-top: 35vh
+    display: flex;
+    justify-content: center;
+    width: 40vw;
+    text-align: center;
+    margin: auto;
+    align-items: center;
+    margin-top: 20vh;
+}
+
+h1 {
+    color: $text-color;
 }
 
 .w-100 {
-  width: 100%;
+    width: 100%;
 }
 
 .link {
-  color: black;
-  font-size: 30px;
-  text-decoration: none;
+    width: 150px;
+    color: $inverted-text-color;
+    font-size: 25px;
+    text-decoration: none;
+    transition: 0.2s all;
+    border-radius: 8px;
+    padding: 10px 0;
+    background-color: $primary-button-color;
+    box-shadow: $standard-box-shadow;
 }
 
 .link:hover {
-  color: darkgray;
+    background-color: $primary-button-color-hover;
+    color: $inverted-text-color-hover;
+    transition: 0.2s all;
 }
 
 .auth-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  margin-top: 10vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-top: 10vh;
 }
 
 input {
-  width: 100%;
-  height: 50px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 0 20px;
-  margin-bottom: 10px;
+    width: 100%;
+    height: 50px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 0 20px;
+    margin-bottom: 10px;
 }

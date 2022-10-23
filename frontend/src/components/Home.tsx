@@ -12,14 +12,30 @@ const Home: FC = (props): JSX.Element => {
                 Welcome to the template. These are the standard routes
                 available:
             </h1>
-            <div className="mt-4 d-flex justify-content-space-between">
-                <Link className="link col-md-6 col-sm-12" to={`/${user.active ? "logout" : "login"}`}>
+            <div
+                className="mt-4 d-flex"
+                style={{ width: "50%", justifyContent: "space-evenly" }}
+            >
+                <Link
+                    className="link col-md-6 col-sm-12"
+                    to={`/${user.active ? "logout" : "login"}`}
+                >
                     {user.active ? "Logout" : "Login"}
                 </Link>
                 <Link className="link col-md-6 col-sm-12" to="/register">
                     Register
                 </Link>
             </div>
+            {user.active && (
+                <>
+                    <h1 className="mt-5 d-flex justify-content-center col-md-12">
+                        User info
+                    </h1>
+                    <ul>Id: {user.id}</ul>
+                    <ul>Name: {user.name}</ul>
+                    <ul>Email: {user.email}</ul>
+                </>
+            )}
         </div>
     )
 }

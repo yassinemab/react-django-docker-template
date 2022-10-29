@@ -31,8 +31,8 @@ function App() {
                 // user if wanted.
             })
             .catch((res: any) => {
-                console.log("user is not logged in")
                 // Show error
+                console.log(res)
             })
     })
 

@@ -2,41 +2,49 @@ import React, { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import * as types from "../types"
 import HttpService from "../services/http.service"
-// import { Store } from 'react-notifications-component';
+import Input from "./subcomponents/Input"
 
 export default function Register(): JSX.Element {
     const service = new HttpService()
     const navigate = useNavigate()
-    const [formData, setFormData] = useState<types.Dictionary<string>>({
-        email: "",
-        name: "",
-        password: "",
-        confirmPassword: "",
+    const [formData, setFormData] = useState<types.Dictionary<any>>({
+        email: {
+            value: "",
+            invalid: (value: string) => {
+                return value.length < 5
+            },
+        },
+        name: {
+            value: "",
+            invalid: (value: string) => {
+                return value.length < 5
+            },
+        },
+        password: {
+            value: "",
+            invalid: (value: string) => {
+                return value.length < 5
+            },
+        },
+        confirmPassword: {
+            value: "",
+            invalid: (value: string) => {
+                const password = document.querySelector("#input-password") as HTMLInputElement
+                return value !== password.value
+            },
+        },
     })
 
-    const register = (): void => {
-        if (formData.password !== formData.confirmPassword) {
-            // Show error
-            console.log("passwords don't match")
-            return
-        }
-
-        service.post("auth/register/", formData)
+    const register = (e: any): void => {
+        e.preventDefault();
+        service
+            .post("auth/register/", {
+                email: formData.email.value,
+                name: formData.name.value,
+                password: formData.password.value,
+            })
             .then((res: any) => {
                 console.log("successfully registered")
-                // Store.addNotification({
-                //     title: "Success",
-                //     message: res.data.message,
-                //     type: "success",
-                //     insert: "top",
-                //     container: "top-right",
-                //     animationIn: ["animate__animated", "animate__fadeIn"],
-                //     animationOut: ["animate__animated", "animate__fadeOut"],
-                //     dismiss: {
-                //         duration: 3000,
-                //         onScreen: true
-                //     }
-                // });
 
                 // Redirect to login
                 navigate("/login")
@@ -44,8 +52,7 @@ export default function Register(): JSX.Element {
             })
             .catch((res: any) => {
                 // Show error
-                console.log("errorsss")
-                console.log(res.data)
+                console.log(res)
             })
     }
 
@@ -54,66 +61,88 @@ export default function Register(): JSX.Element {
             <div className="col-xl-4 col-md-8 col-sm-11 col-xs-11">
                 <h1 className="text-center">Register</h1>
                 <form
-                    onSubmit={() => {
-                        register()
+                    onSubmit={(e: any) => {
+                        register(e)
                     }}
                 >
                     <div className="form-group">
-                        <label htmlFor="email">Email</label>
-                        <input
+                        <Input
+                            style={{ marginBottom: "10px" }}
+                            label="Email"
                             type="email"
                             className="form-control"
-                            id="email"
-                            placeholder="Enter email"
-                            onChange={(e) => {
+                            placeholder="you@example.com"
+                            value={formData.email.value}
+                            invalid={formData.email.invalid}
+                            invalidText="Email must be at least 5 characters long"
+                            onChange={(e: any) => {
                                 setFormData({
                                     ...formData,
-                                    email: e.target.value,
+                                    email: {
+                                        ...formData.email,
+                                        value: e.target.value,
+                                    },
                                 })
                             }}
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="name">Name</label>
-                        <input
+                        <Input
+                            style={{ marginBottom: "10px" }}
                             type="text"
+                            label="Name"
                             className="form-control"
-                            id="name"
-                            placeholder="Enter name"
-                            onChange={(e) => {
+                            placeholder="Yassine"
+                            value={formData.name.value}
+                            invalid={formData.name.invalid}
+                            invalidText="name must be at least 2 characters long"
+                            onChange={(e: any) => {
                                 setFormData({
                                     ...formData,
-                                    name: e.target.value,
+                                    name: {
+                                        ...formData.name,
+                                        value: e.target.value,
+                                    },
                                 })
                             }}
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="password">Password</label>
-                        <input
+                        <Input
+                            style={{ marginBottom: "10px" }}
                             type="password"
+                            label="Password"
                             className="form-control"
-                            id="password"
-                            placeholder="Password"
-                            onChange={(e) => {
+                            placeholder="********"
+                            value={formData.password.value}
+                            invalid={formData.password.invalid}
+                            invalidText="Password must be at least 8 characters long"
+                            onChange={(e: any) => {
                                 setFormData({
                                     ...formData,
-                                    password: e.target.value,
+                                    password: {
+                                        ...formData.password,
+                                        value: e.target.value,
+                                    },
                                 })
                             }}
                         />
-                        <label htmlFor="confirmPassword">
-                            Confirm Password
-                        </label>
-                        <input
+                        <Input
+                            style={{ marginBottom: "10px" }}
                             type="password"
+                            label="Confirm password"
                             className="form-control"
-                            id="confirmPassword"
-                            placeholder="Confirm Password"
-                            onChange={(e) => {
+                            placeholder="********"
+                            value={formData.confirmPassword.value}
+                            invalid={formData.confirmPassword.invalid}
+                            invalidText="Confirm password must match password"
+                            onChange={(e: any) => {
                                 setFormData({
                                     ...formData,
-                                    confirmPassword: e.target.value,
+                                    confirmPassword: {
+                                        ...formData.confirmPassword,
+                                        value: e.target.value,
+                                    },
                                 })
                             }}
                         />

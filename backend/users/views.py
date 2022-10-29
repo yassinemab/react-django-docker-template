@@ -109,7 +109,7 @@ class AuthViewSet(viewsets.ViewSet):
         password = password.encode("utf-8")
         hashed_password = bcrypt.hashpw(password, bcrypt.gensalt())
         user = Users.objects.create(
-            email=email, name=name, password=str(hashed_password)[2:-1], active=True)
+            email=email, name=name, password=hashed_password.decode('utf-8'), active=True)
         user.save()
 
         return Response({"message": "Created account successfully"})

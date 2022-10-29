@@ -33,8 +33,6 @@ export default function Login() {
                 password: formData.password.value,
             })
             .then((res: any) => {
-                console.log("successfully logged in")
-
                 // Set the user in the redux store
                 const data = res.data.data
                 dispatch(

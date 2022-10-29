@@ -7,7 +7,6 @@ export default function Logout() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     useEffect(()=>{
-        console.log("Logging out")
         document.cookie = ""
         dispatch(setUser({active: false, name: "", email: "", id: 0}))
         navigate("/")

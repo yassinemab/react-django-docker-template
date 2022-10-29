@@ -44,11 +44,8 @@ export default function Register(): JSX.Element {
                 password: formData.password.value,
             })
             .then((res: any) => {
-                console.log("successfully registered")
-
                 // Redirect to login
                 navigate("/login")
-                console.log(res.data)
             })
             .catch((res: any) => {
                 // Show error

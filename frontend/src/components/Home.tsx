@@ -28,9 +28,9 @@ const Home: FC = (props): JSX.Element => {
             </div>
             {user.active && (
                 <>
-                    <h1 className="mt-5 d-flex justify-content-center col-md-12">
+                    <h2 className="mt-5 d-flex justify-content-center col-md-12">
                         User info
-                    </h1>
+                    </h2>
                     <ul>Id: {user.id}</ul>
                     <ul>Name: {user.name}</ul>
                     <ul>Email: {user.email}</ul>

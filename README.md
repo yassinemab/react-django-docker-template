@@ -10,6 +10,13 @@ Basic web development project for a React (typescript), Django and Docker tech s
 - Basic backend testing using django tests. ✅
 - Django commands for changing app names and project name ✅
 
+Things to change:
+- Remove frontend from docker
+- Add tailwindcss support
+- Add support for django workers
+- Add support for websockets
+- Add support for cronjobs
+
 
 # Get started
 After forking the project, you can start the app by running `docker-compose up`.
